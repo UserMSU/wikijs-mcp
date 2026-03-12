@@ -1,99 +1,45 @@
 # WikiJS MCP Server
 
-A Model Context Protocol (MCP) server that provides integration with WikiJS, allowing AI assistants to search and retrieve content from your WikiJS knowledge base.
+A Model Context Protocol (MCP) Сервер, обеспечивающий интеграцию с Wiki.js, позволяющий AI-помощникам искать и извлекать контент из базы знаний wiki.js.
 
-## Overview
+## Обзор
 
-This MCP server enables AI assistants to interact with WikiJS instances by providing tools to:
-- Search for pages by query string
-- Retrieve pages by ID
-- Retrieve pages by path and locale
-- Get all pages from the wiki
+Этот MCP-сервер позволяет AI-помощникам взаимодействовать с Wiki.js, предоставляя инструменты для:
+- Поиска страниц по строке запроса
+- Извлечения страниц по ID
+- Извлечения страниц по пути и локали
+- Получения всех страниц из вики
 
-## Configuration for Cursor
+## Получение API ключа для подключения к Wiki.js
 
-### Stdio
-```json
-{
-  "mcpServers": {
-    "wikijs-mcp": {
-      "command": "npx",
-        "args": [
-            "wikijs-mcp"
-        ],
-        "env": {
-            "WIKIJS_URL": <your wikijs url>,
-            "WIKIJS_API_KEY": <your wikijs api key>
-        }
-    }
-  }
-}
-```
-
-### Streamable Http
-
-#### Host Machine
-Start the server `TRANSPORT_METHOD=streamable-http TRANSPORT_OPTIONS_PORT=8080 npx wikijs-mcp` (See [Environment Variables](#environment-variables) for all available variables)
-
-#### IDE
-
-```json
-{
-  "mcpServers": {
-    "wikijs-mcp": {
-      "transport": "http-streamable",
-      "name": "WikiJS MCP",
-      "url": <your mcp host url with port>/mcp
-    }
-  }
-}
-```
-
-## Getting a WikiJS API Key
-
-1. Log into your WikiJS instance as an administrator
-2. Go to **Administration** > **API Access**
-3. Create a new API key with appropriate permissions
-4. Copy the generated key to your `.env` file
+1. Войти в Админ-панель Wiki.js
+2. Перейти в раздел группы и создать группу "Wiki Reader" с правами:
+Общие: read:pages, write:pages, manage:pages, read:source, read:history, read:assets, read:comments
+Page Rules: / read:pages, manage:pages, read:source, read:history, read:assets, read:comments
+3. Перейти в раздел "Доступ к API"
+4. Создать новый API ключ с групповыми разрешениями для "Wiki Reader"
+5. Добавить ключ в .env
 
 
-## Development
+## Запуск контейнера MCP-сервера
 
-1. Clone the repository:
+1. Склонировать репозиторий:
 ```bash
-git clone https://github.com/RicardoCenci/wikijs-mcp.git
+git clone https://github.com/UserMSU/wikijs-mcp.git
 cd wikijs-mcp
 ```
 
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Copy the environment template and fill out its contents
+2. Скопируйте .env файл и заполнить.
 ```bash
 cp env.example .env
 ```
 
-4. Build the project
-If you have `make` installed:
-```bash
-make build
-```
-
-5. Deploy the WikiJS instance for testing
-
+3. Запустить MCP-сервер
 ```bash
 docker compose up -d
 ```
 
-## Usage
-
-```bash
-npx wikijs-mcp
-```
-
-## Environment Variables
+## Переменные окружения
 | Variable                               | Description                                              | Required | Allowed Values         |Default                    |
 |----------------------------------------|----------------------------------------------------------|----------|------------------------|---------------------------|
 | `WIKIJS_URL`                           | URL of your WikiJS instance                              | Yes      | -                      | -                         |
@@ -103,6 +49,3 @@ npx wikijs-mcp
 | `TRANSPORT_OPTIONS_CORS_HEADERS`       | Cors Headers, comma separated (only on streamable-http)  | No       | -                      |Content-Type=mcp-session-id|
 | `TRANSPORT_OPTIONS_CORS_METHODS`       | Cors Methods, comma separated (only on streamable-http)  | No       | -                      |GET,POST,OPTIONS           | 
 | `TRANSPORT_OPTIONS_SESSION_TIMEOUT_MS` | Session timeout (only on streamable-http)                | No       | -                      |60000                      |
-
-## License
-This project is licensed under the MIT License.

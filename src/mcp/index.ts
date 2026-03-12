@@ -27,8 +27,7 @@ export class WikiJSMcpServer {
     public createServerInstance(): McpServer {
         const server = new McpServer({
             name: 'wikijs-mcp-server',
-            version: this.options.version,
-            instructions: this.options.instructions
+            version: this.options.version
         });
 
         this._registerToolsForServer(server);

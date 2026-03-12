@@ -75,9 +75,6 @@ export class HttpServer {
   
             const transport = new StreamableHTTPServerTransport({
               sessionIdGenerator: () => randomUUID(),
-              onsessionclosed: (sessionId) => {
-                this.sessionManager.removeSession(sessionId);
-              },
             });
   
             const serverInstance = this.mcpServer.createServerInstance();
