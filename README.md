@@ -14,8 +14,8 @@ A Model Context Protocol (MCP) Сервер, обеспечивающий инт
 
 1. Войти в Админ-панель Wiki.js
 2. Перейти в раздел группы и создать группу "Wiki Reader" с правами:
-Общие: read:pages, write:pages, manage:pages, read:source, read:history, read:assets, read:comments
-Page Rules: / read:pages, manage:pages, read:source, read:history, read:assets, read:comments
+- Общие: read:pages, write:pages, manage:pages, read:source, read:history, read:assets, read:comments
+- Page Rules: / read:pages, manage:pages, read:source, read:history, read:assets, read:comments
 3. Перейти в раздел "Доступ к API"
 4. Создать новый API ключ с групповыми разрешениями для "Wiki Reader"
 5. Добавить ключ в .env
